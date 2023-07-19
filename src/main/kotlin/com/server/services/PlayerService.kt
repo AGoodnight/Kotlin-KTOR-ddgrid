@@ -2,6 +2,7 @@ package com.server.services
 
 import aws.sdk.kotlin.services.dynamodb.model.AttributeValue
 import aws.sdk.kotlin.services.dynamodb.model.PutItemResponse
+import aws.sdk.kotlin.services.dynamodb.model.UpdateItemResponse
 import com.github.javafaker.Faker
 import com.server.mocks.MockPlayer
 import com.server.models.Player
@@ -60,14 +61,9 @@ class PlayerService {
         return PlayerPutResponse(success = true)
     }
 
-    fun movePlayer(id:String, x:Int?, y:Int?):Player{
-        if(x is Int) {
-            player.x += x
-        }
-        if(y is Int) {
-            player.y += y
-        }
-        return player
+    suspend fun movePlayer(id:String, x:Int, y:Int):PlayerPutResponse{
+        val result:UpdateItemResponse = _dal.movePlayerRequest("MatrixEntities",id,x,y)
+        return PlayerPutResponse(success = true);
     }
 
 }

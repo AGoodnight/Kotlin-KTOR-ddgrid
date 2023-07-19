@@ -55,4 +55,38 @@ class PlayerDAL {
         return response
     }
 
+    suspend fun movePlayerRequest(tblName:String,id:String,x:Int,y:Int):UpdateItemResponse{
+        val itemKey = mutableMapOf<String,AttributeValue>()
+        itemKey["id"] = AttributeValue.S(id)
+
+        val updateValues = mutableMapOf<String,AttributeValueUpdate>()
+        updateValues["x"] = AttributeValueUpdate {
+            value = AttributeValue.S(x.toString())
+            action = AttributeAction.Put
+        }
+
+        updateValues["y"] = AttributeValueUpdate {
+            value = AttributeValue.S(y.toString())
+            action = AttributeAction.Put
+        }
+
+        var response:UpdateItemResponse
+
+        val request = UpdateItemRequest{
+            tableName=tblName
+            key = itemKey
+            attributeUpdates = updateValues
+        }
+
+        DynamoDbClient {
+            region="us-east-1"
+            credentialsProvider = EnvironmentCredentialsProvider()
+        }.use { ddb ->
+            val result = ddb.updateItem(request)
+            response = result
+        }
+
+        return response
+    }
+
 }

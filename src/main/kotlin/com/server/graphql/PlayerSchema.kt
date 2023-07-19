@@ -22,7 +22,7 @@ fun SchemaBuilder.playerSchema(playerService:PlayerService){
         }
     }
     mutation("move"){
-        resolver{id:String, x:Int?, y:Int?, ctx:Context ->
+        resolver{id:String, x:Int, y:Int, ctx:Context ->
             val result = playerService.movePlayer(id,x,y)
             result
         }
