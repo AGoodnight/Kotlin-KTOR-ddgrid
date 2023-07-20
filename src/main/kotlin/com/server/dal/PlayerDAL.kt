@@ -22,7 +22,6 @@ class PlayerDAL {
 
         DynamoDbClient {
             region="us-east-1"
-            credentialsProvider = EnvironmentCredentialsProvider()
         }.use { ddb ->
             val response = ddb.getItem(request)
             player = response
@@ -46,7 +45,6 @@ class PlayerDAL {
 
         DynamoDbClient {
             region="us-east-1"
-            credentialsProvider = EnvironmentCredentialsProvider()
         }.use { ddb ->
             val result = ddb.putItem(request)
             response = result
@@ -80,7 +78,6 @@ class PlayerDAL {
 
         DynamoDbClient {
             region="us-east-1"
-            credentialsProvider = EnvironmentCredentialsProvider()
         }.use { ddb ->
             val result = ddb.updateItem(request)
             response = result

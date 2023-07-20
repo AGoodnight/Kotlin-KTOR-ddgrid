@@ -5,8 +5,9 @@ val kgraphql_version : String by project
 val logback_version : String by project
 
 plugins {
-    kotlin("jvm") version "1.8.20"
+    kotlin("jvm") version "1.9.0"
     id("org.jetbrains.kotlin.plugin.serialization") version "1.8.0"
+    id("io.ktor.plugin") version "2.3.2"
     application
 }
 
@@ -34,14 +35,30 @@ dependencies {
     implementation("com.github.javafaker:javafaker:1.0.2")
 }
 
-tasks.test {
-    useJUnitPlatform()
-}
-
 kotlin {
     jvmToolchain(11)
+    compilerOptions {
+        apiVersion.set(org.jetbrains.kotlin.gradle.dsl.KotlinVersion.KOTLIN_1_9)
+    }
+}
+
+ktor {
+    docker {
+        jreVersion.set(io.ktor.plugin.features.JreVersion.JRE_17)
+        portMappings.set(listOf(
+            io.ktor.plugin.features.DockerPortMapping(
+                9000,
+                9000,
+                io.ktor.plugin.features.DockerPortMappingProtocol.TCP
+            )
+        ))
+    }
 }
 
 application {
-    mainClass.set("MainKt")
+    mainClass.set("com.server.MainKt")
+}
+
+tasks.named<Test>("test") {
+    useJUnitPlatform()
 }
