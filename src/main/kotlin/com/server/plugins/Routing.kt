@@ -7,9 +7,5 @@ import java.io.File
 import java.nio.file.Files
 
 fun Application.configureRouting() {
-    routing {
-        staticFiles("/files", File("files")){
-            default("index.html")
-        }
-    }
+
 }

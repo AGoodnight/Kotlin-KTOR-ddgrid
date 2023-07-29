@@ -33,6 +33,7 @@ dependencies {
     implementation("aws.sdk.kotlin:dynamodb:0.28.1-beta")
     implementation("org.jetbrains.kotlin:kotlin-reflect:1.9.0")
     implementation("com.github.javafaker:javafaker:1.0.2")
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.8.+")
 }
 
 kotlin {

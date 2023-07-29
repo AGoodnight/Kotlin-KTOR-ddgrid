@@ -1,12 +1,10 @@
 package com.server
 
 import io.ktor.server.application.*
-import io.ktor.server.engine.*
 import io.ktor.server.netty.*
-import com.server.plugins.*
 import com.apurebase.kgraphql.GraphQL
-import com.server.graphql.playerSchema
-import com.server.services.PlayerService
+import com.server.graphql.creatureSchema
+import com.server.services.CreatureService
 import io.ktor.http.*
 import io.ktor.server.plugins.cors.routing.*
 
@@ -31,16 +29,15 @@ fun Application.configureCORS() {
 
 fun Application.configureGraphQL() {
     install(GraphQL) {
-        val playerService = PlayerService()
+        val creatureService = CreatureService()
         playground=true
         schema{
-            playerSchema(playerService)
+            creatureSchema(creatureService)
         }
     }
 }
 
 fun Application.module() {
-    configureRouting()
     configureCORS()
     configureGraphQL()
 }
